@@ -1,8 +1,7 @@
-/** @type {import('next').NextConfig} */
+// next.config.js
 module.exports = {
   reactStrictMode: true,
-  swcMinify: true,
-  images  : {
-    domains: ['ik.imagekit.io'],
-}
-}
+  images: {
+    domains: ['ik.imagekit.io' , 'avatars.dicebear.com' ],
+  },
+};

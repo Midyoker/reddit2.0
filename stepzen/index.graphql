@@ -1,0 +1,4 @@
+schema
+  @sdl(files: ["postgresql/index.graphql", "postgresql-01/index.graphql"]) {
+  query: Query
+}
