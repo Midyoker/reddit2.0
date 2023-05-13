@@ -8,6 +8,8 @@ import { ADD_POST, ADD_SUBREDDIT } from '../graphql/mutations';
 import client from '../apollo-client';
 import { GET_SUBREDDIT_BY_TOPIC } from '../graphql/queries';
 import { toast } from 'react-hot-toast';
+import { GET_ALL_POSTS } from '../graphql/queries';
+import { type } from 'os';
 
 type FormData = {
   postTitle: string;
@@ -16,9 +18,15 @@ type FormData = {
   subreddit: string;
 };
 
-function PostBox() {
+type Props = {
+  subreddit?: string;
+}
+
+function PostBox({ subreddit }: Props) {
   const { data: session } = useSession();
-  const [addPost] = useMutation(ADD_POST)
+  const [addPost] = useMutation(ADD_POST ,{
+    refetchQueries: [GET_ALL_POSTS,'getPostlist'],
+  })
   const [addSubreddit] = useMutation(ADD_SUBREDDIT)
 
   const [imageBoxOpen, setImageBoxOpen] = useState(false);
@@ -42,7 +50,7 @@ function PostBox() {
       } = await client.query({
         query: GET_SUBREDDIT_BY_TOPIC,
         variables: {
-          topic: formData.subreddit,
+          topic: subreddit || formData.subreddit,
         },
       });
       const subredditExists = getSubredditListByTopic.length > 0;
@@ -116,7 +124,7 @@ function PostBox() {
           disabled={!session}
           className="flex-1 rounded-md bg-gray-50 p-2 pl-5 outline-none"
           type="text"
-          placeholder={session ? 'Create a post' : 'Sign in to post'}
+          placeholder={session ? `Create a post in r/${subreddit}`:'Create a post by entering the title! ' : 'Sign in to post'}
         />
         <PhotographIcon
           onClick={() => setImageBoxOpen(!imageBoxOpen)}

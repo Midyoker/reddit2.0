@@ -27,7 +27,7 @@ type post {
   comment: [comment]
    @materializer(
     query: "getCommentsByPostId"
-    arguments: [{name:post_id field: "id"}]
+    arguments: [{name:"post_id" field: "id"}]
     )
   body: String
 }
@@ -104,6 +104,15 @@ type Query {
       """
       configuration: "postgresql_config"
     )
+  getPostList: [post]
+    @dbquery(
+      type: "postgresql"
+      query: """
+     select * from "post"
+     order by "post"."created_at" desc
+      """
+      configuration: "postgresql_config"
+    )
   getPostUsingComment_post_id_fkey(post_id: ID!): post
     @dbquery(
       type: "postgresql"
@@ -122,6 +131,20 @@ type Query {
       """
       configuration: "postgresql_config"
     )
+   getSubredditListByTopic(topic: String!): [subreddit]
+   @dbquery(
+    type: "postgresql"
+    query: """
+    select * from "subreddit" where "topic" =$1
+    """
+    configuration: "postgresql_config"
+   ) 
+   getSubredditList: [subreddit]
+   @dbquery(
+    type: "postgresql"
+    table: "subreddit"
+    configuration: "postgresql_config"
+   )
   post(id: ID!): post
     @dbquery(
       type: "postgresql"
