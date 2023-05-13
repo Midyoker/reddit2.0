@@ -13,6 +13,7 @@
     "@heroicons/react": "^1.0.6",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
+    "heroicons": "^2.0.18",
     "next": "13.4.1",
     "next-auth": "^4.22.1",
     "react": "18.2.0",
