@@ -12,10 +12,13 @@
     "@apollo/client": "^3.7.14",
     "@heroicons/react": "^1.0.6",
     "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.6",
     "next": "13.4.1",
     "next-auth": "^4.22.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@types/node": "20.1.1",
