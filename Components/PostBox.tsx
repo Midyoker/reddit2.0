@@ -27,6 +27,7 @@ function PostBox() {
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
 
   } = useForm<FormData>();
 
