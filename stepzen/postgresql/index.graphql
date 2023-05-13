@@ -12,7 +12,11 @@ type post {
   username: String
   title: String
   subreddit_id: ID
-  subreddit: subreddit @materializer(query: "getSubreddit")
+  subreddit: subreddit 
+   @materializer(
+    query: "getSubredditListById",
+    arguments: [{name:"id", field:"subreddit_id" }]
+    )
   image: String
   id: ID!
   created_at: DateTime
@@ -132,6 +136,14 @@ type Query {
       schema: "public"
       query: """
       SELECT "created_at", "id", "topic" FROM "subreddit" WHERE "id" = $1
+      """
+      configuration: "postgresql_config"
+    )
+  getSubredditListById(id: ID!): [subreddit]
+    @dbquery(
+      type:"postgresql"
+      query:"""
+      select * from "subreddit" where "id" = $1
       """
       configuration: "postgresql_config"
     )
