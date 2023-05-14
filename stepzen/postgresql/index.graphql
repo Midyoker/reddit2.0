@@ -1,6 +1,6 @@
 type comment {
   username: String
-  test: String
+  text: String
   post_id: ID
   post: post @materializer(query: "getPostUsingComment_post_id_fkey")
   id: ID!
@@ -73,7 +73,7 @@ type Query {
       type: "postgresql"
       schema: "public"
       query: """
-      SELECT "created_at", "id", "post_id", "test", "username" FROM "comment" LIMIT $1 OFFSET $2
+      SELECT "created_at", "id", "post_id", "text", "username" FROM "comment" LIMIT $1 OFFSET $2
       """
       configuration: "postgresql_config"
     )
@@ -82,18 +82,18 @@ type Query {
       type: "postgresql"
       schema: "public"
       query: """
-      SELECT "created_at", "id", "post_id", "test", "username" FROM "comment" WHERE "post_id" = $1
+      SELECT "created_at", "id", "post_id", "text", "username" FROM "comment" WHERE "post_id" = $1
       """
       configuration: "postgresql_config"
     )
-   getCommentsByPostId(post_id: ID!): [comment]
-   @dbquery(
-    type:"postgresql"
-    query:"""
-    select * from "comments" where "post_id" = $1
-    """
-    configuration: "postgresql_config"
-   ) 
+ getCommentsByPostId(post_id: ID!): [comment]
+@dbquery(
+ type:"postgresql"
+ query:"""
+ select * from "comments" where "post_id" = $1
+ """,
+ configuration: "postgresql_config"
+)
   " Queries for type 'post' "
   getPost(post_id: ID!): post
     @dbquery(
@@ -122,17 +122,17 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-  getPostListByTopic( topic: String!): [post]
-  @dbquery(
-    type:"postgresql"
-    query:"""
-    select *, "post".id as id from "post"
-    join "subreddit" on "subreddit","id"="post","subreddit_id"
-    where "subreddit","topic"=$1
-    order by "post"."created_at" desc
-    """
-    configuration: "postgresql_config"
-  )
+ getPostListByTopic( topic: String!): [post]
+@dbquery(
+ type:"postgresql"
+ query:"""
+ select *, "post".id as id from "post"
+ join "subreddit" on "subreddit","id"="post","subreddit_id"
+ where "subreddit","topic"=$1
+ order by "post"."created_at" desc
+ """,
+ configuration: "postgresql_config"
+)
   getPostUsingPost_subreddit_id_fkey(id: ID!): [post]
     @dbquery(
       type: "postgresql"
@@ -159,6 +159,7 @@ type Query {
     """
     configuration: "postgresql_config"
    )
+
 
    getSubredditList: [subreddit]
    @dbquery(
@@ -291,9 +292,9 @@ type Mutation {
       configuration: "postgresql_config"
     )
   insertComment(
-    test: String
-    username: String
-    post_id: ID
+    text: String!
+    username: String!
+    post_id: ID!
     created_at: DateTime
   ): comment
     @dbquery(
@@ -307,7 +308,7 @@ type Mutation {
     id: ID!
     created_at: DateTime
     post_id: ID
-    test: String
+    text: String
     username: String
   ): comment
     @dbquery(
@@ -317,7 +318,7 @@ type Mutation {
       UPDATE "comment" SET
         "created_at" = COALESCE($2, "created_at"),
         "post_id" = COALESCE($3, "post_id"),
-        "test" = COALESCE($4, "test"),
+        "text" = COALESCE($4, "text"),
         "username" = COALESCE($5, "username")
       WHERE
         "id" = $1
@@ -415,12 +416,7 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertVote(
-    username: String
-    post_id: ID
-    created_at: DateTime
-    upvote: Boolean
-  ): vote
+  insertVote(post_id: ID!, username: String!, upvote: Boolean!): vote
     @dbquery(
       type: "postgresql"
       schema: "public"
