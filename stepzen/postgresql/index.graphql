@@ -142,14 +142,24 @@ type Query {
       """
       configuration: "postgresql_config"
     )
-   getSubredditListByTopic(topic: String!): [subreddit]
+  getSubredditListByTopic(topic: String!): [subreddit]
    @dbquery(
     type: "postgresql"
     query: """
     select * from "subreddit" where "topic" =$1
     """
     configuration: "postgresql_config"
-   ) 
+   )
+   getPostListByPostId(post_id: ID!): post
+   @dbquery(
+    type: "postgresql"
+    query: """
+    select * from "post"
+    where "post","id" = $1
+    """
+    configuration: "postgresql_config"
+   )
+
    getSubredditList: [subreddit]
    @dbquery(
     type: "postgresql"
@@ -212,7 +222,7 @@ type Query {
       table: "subreddit"
       configuration: "postgresql_config"
     )
-
+    
   subredditPaginatedList(first: Int, after: Int): [subreddit]
     @dbquery(
       type: "postgresql"
@@ -364,6 +374,7 @@ type Mutation {
       """
       configuration: "postgresql_config"
     )
+   
   " Mutations for type 'subreddit' "
   deleteSubreddit(id: ID!): subreddit
     @dbquery(

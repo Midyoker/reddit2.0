@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
+    "@uiball/loaders": "^1.2.6",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "heroicons": "^2.0.18",

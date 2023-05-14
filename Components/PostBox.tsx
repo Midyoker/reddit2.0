@@ -49,7 +49,8 @@ function PostBox({ subreddit }: Props) {
           topic: subreddit || formData.subreddit,
         },
       });
-      const subredditExists = getSubredditByTopic.length > 0;
+      const subredditExists = getSubredditByTopic && getSubredditByTopic.length > 0;
+
       if (!subredditExists) {
         console.log('Subreddit is new -> creating new subreddit');
 
@@ -65,7 +66,7 @@ function PostBox({ subreddit }: Props) {
           variables: {
             body: formData.postBody,
             image: image,
-            subreddit_id: newSubreddit.insert_subreddit_one.id,
+            subreddit_id: newSubreddit.insert_subreddit_one ? newSubreddit.insert_subreddit_one.id : null,
             title: formData.postTitle,
             username: session?.user?.name,
           },
@@ -105,7 +106,7 @@ function PostBox({ subreddit }: Props) {
     }
   });
   return (
-    <form className="sticky top-16 z-50 bg-white border rounded-md border-gray-300 p-2" onSubmit={onSubmit}>
+    <form className="sticky top-20 z-50 bg-white border rounded-md border-gray-300 p-2" onSubmit={onSubmit}>
       <div className="flex items-center space-x-3">
         <Avatar />
         <input
