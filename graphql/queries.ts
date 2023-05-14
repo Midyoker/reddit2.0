@@ -1,5 +1,18 @@
 import { gql } from '@apollo/client';
 
+export const typeDefs = gql`
+  type Entity {
+    id: ID!
+    name: String!
+    createdAt: String!
+  }
+
+  type Query {
+    entity(id: ID!): Entity
+  }
+`;
+
+
 export const GET_ALL_VOTES_BY_POST_ID = gql`
     query MyQuery($post_id: ID!) {
         getVotesByPostId(post_id: $post_id) {

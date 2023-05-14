@@ -50,16 +50,16 @@ function PostBox({ subreddit }: Props) {
         },
       });
       const subredditExists = getSubredditByTopic && getSubredditByTopic.length > 0;
-
+    
       if (!subredditExists) {
         console.log('Subreddit is new -> creating new subreddit');
-
+    
         const { data: newSubreddit } = await addSubreddit({
           variables: {
             topic: formData.subreddit,
           },
         });
-
+    
         console.log('creating post.', formData);
         const image = formData.postImage || '';
         const { data: newPost } = await addPost({
@@ -75,9 +75,9 @@ function PostBox({ subreddit }: Props) {
       } else {
         console.log('using existing subreddit');
         console.log('getSubredditByTopic', getSubredditByTopic);
-
+    
         const image = formData.postImage || '';
-
+    
         const { data: newPost } = await addPost({
           variables: {
             body: formData.postBody,
@@ -89,16 +89,16 @@ function PostBox({ subreddit }: Props) {
         });
         console.log('new post added:', newPost);
       }
-
+    
       setValue('postBody', '');
       setValue('postTitle', '');
       setValue('postImage', '');
       setValue('subreddit', '');
-
+    
       toast.success('Post created!', {
         id: notification,
       });
-    } catch (error) {
+    }catch (error) {
       console.log(error);
       toast.error('Whoops!! something went wrong', {
         id: notification,
