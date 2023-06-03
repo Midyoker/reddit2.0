@@ -27,38 +27,36 @@ export const GET_ALL_VOTES_BY_POST_ID = gql`
 
 
 export const GET_POST_BY_POST_ID = gql`
-    query MyQuery($id: ID!) {
-        getPostListByPostId(id: $id) {
-            body,
-            comments {
-                created_at,
-                id,
-                post_id,
-                text,
-                username,
-            }
-            created_at,
-            id,
-            image,
-            subreddit {
-                created_at,
-                id,
-                topic,
-            }
-            title,
-            subreddit_id,
-            username,
-            votes {
-                created_at,
-                id,
-                post_id,
-                upvote,
-                username,
-            }
-        }
+  query GetPostByPostId($id: ID!) {
+    getPostListByPostId(id: $id) {
+      id
+      title
+      body
+      image
+      username
+      created_at
+      subreddit {
+        id
+        topic
+        created_at
+      }
+      comments {
+        id
+        post_id
+        text
+        username
+        created_at
+      }
+      votes {
+        id
+        post_id
+        username
+        upvote
+        created_at
+      }
     }
+  }
 `;
-
 export const GET_ALL_POSTS = gql`
     query MyQuery {
         getPostList {

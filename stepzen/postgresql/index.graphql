@@ -4,7 +4,7 @@ type comment {
   post_id: ID
   post: post @materializer(query: "getPostUsingComment_post_id_fkey")
   id: ID!
-  created_at: DateTime @createdAt
+  created_at: DateTime 
 }
 
 type post {
@@ -23,7 +23,7 @@ type post {
     )
   image: String
   id: ID!
-  created_at: DateTime @createdAt
+  created_at: DateTime 
   comment: [comment]
    @materializer(
     query: "getCommentsByPostId"
@@ -36,7 +36,7 @@ type subreddit {
   topic: String
   post: [post] @materializer(query: "getPostUsingPost_subreddit_id_fkey")
   id: ID!
-  created_at: DateTime @createdAt
+  created_at: DateTime
 }
 
 type vote {
@@ -45,7 +45,7 @@ type vote {
   post_id: ID
   post: post @materializer(query: "getPost")
   id: ID!
-  created_at: DateTime @createdAt
+  created_at: DateTime 
 }
 
 """

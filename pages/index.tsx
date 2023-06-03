@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Header from '../Components/Header'
 import PostBox from '../Components/PostBox'
 import Feed from '../Components/Feed'
 

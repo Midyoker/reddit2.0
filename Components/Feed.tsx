@@ -4,7 +4,7 @@ import { GET_ALL_POSTS, GET_ALL_POSTS_BY_TOPIC } from '../graphql/queries';
 import Post from './Post';
 
 type Props = {
-  topic?: string;
+  topic?: String;
 };
 
 function Feed({ topic }: Props) {
