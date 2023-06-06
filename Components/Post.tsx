@@ -32,12 +32,16 @@ interface Post {
   }[];
   username: string;
   created_at: string;
-  title: string;
+  title: string;  
   body: string;
   image: string;
   comments: {
     length: number;
   }[];
+}
+export interface Vote {
+  username: string;
+  isUpvote: boolean;
 }
 
 
