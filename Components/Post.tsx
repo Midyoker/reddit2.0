@@ -23,8 +23,6 @@ import { useQuery } from '@apollo/client';
 import { ADD_VOTE } from '../graphql/mutations';
 import { useMutation } from '@apollo/client';
 import { toast } from 'react-hot-toast';
-import { Vote } from '../types';
-
 interface Post {
   id: string;
   subreddit: {
